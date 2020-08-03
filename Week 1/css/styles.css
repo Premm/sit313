@@ -27,10 +27,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: darkcyan;
 }
 
 .heading {
-  color: darkcyan;
   margin-bottom: 2.5rem;
   text-align: center;
 }
@@ -42,7 +42,12 @@ body {
   margin-top: 1.5rem;
   margin-bottom: 2rem;
 }
+/* MENU */
 
+.nav a {
+  text-decoration: none;
+  color: inherit;
+}
 /* HEADER IMAGE */
 
 .header-image {
@@ -86,7 +91,6 @@ body {
 }
 .profile-description {
   text-align: center;
-  color: darkcyan;
 }
 
 /* PROJECTS */
@@ -119,7 +123,6 @@ body {
   justify-content: center;
   align-items: center;
 
-  color: darkcyan;
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
