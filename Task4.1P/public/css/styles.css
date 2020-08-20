@@ -1,0 +1,154 @@
+/* FONTS */
+@font-face {
+  font-family: "Roboto";
+  src: url("../font/Roboto-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../font/Roboto-Bold.ttf");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../font/Roboto-Thin.ttf");
+  font-weight: 300;
+}
+
+/* GENERIC STYLING */
+
+html,
+body {
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: darkcyan;
+}
+
+.heading {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.line-break {
+  height: 2px;
+  width: 100px;
+  background: darkcyan;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+/* MENU */
+
+.nav a {
+  text-decoration: none;
+  color: inherit;
+}
+/* HEADER IMAGE */
+
+.header-image {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 2px #000;
+  z-index: 2;
+}
+
+.header-image-caption {
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem;
+}
+.header-image:hover .header-image-caption {
+  opacity: 1;
+}
+
+/* PROFILE INTRO */
+.profile-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.profile-description {
+  text-align: center;
+}
+
+/* PROJECTS */
+
+.projects-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.projects-container .project {
+  flex-direction: row;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.projects-container .project .project-image {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.projects-container .project .project-image img {
+  max-height: 200px;
+  border-radius: 20px;
+}
+.projects-container .project .project-description {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* PHOTOS */
+.photos-container {
+  width: 100%;
+}
+.photos-container .photo {
+  position: relative;
+  float: left;
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.photos-container .photo img {
+  width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+  .photos-container .photo {
+    width: 50%;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .photos-container .photo {
+    width: 25%;
+  }
+}
