@@ -1,3 +1,3 @@
-module.exports.requester = require("./requester");
-module.exports.task = require("./task");
-module.exports.worker = require("./worker");
+module.exports.Requester = require("./requester");
+module.exports.Task = require("./task");
+module.exports.Worker = require("./worker");
