@@ -2,7 +2,7 @@ const express = require("express");
 const db = require("../db");
 const path = require("path");
 const https = require("https");
-const bcrypt = require("bcrypt");
+const requester = require("../../Task4.1P/db/models/requester");
 
 module.exports = (app) => {
   //make a connection to th database.
@@ -11,17 +11,8 @@ module.exports = (app) => {
   const router = express.Router();
 
   //page routes
-  app.get("/signup", (req, res) => {
-    res.sendFile(path.join(__dirname, "../signup.html"));
-  });
-
-  // just redirect to login for now.
   app.get("/", (req, res) => {
-    res.redirect("/login");
-  });
-
-  app.get("/tasks", (req, res) => {
-    res.sendFile(path.join(__dirname, "../reqtasks.html"));
+    res.sendFile(path.join(__dirname, "../index.html"));
   });
 
   app.get("/requesters/:userId", (req, res) => {
@@ -31,28 +22,12 @@ module.exports = (app) => {
     });
   });
 
-  app.post("/authenticate", (req, res) => {
-    db.models.Requester.findOne({ email: req.body.email }).then((requester) =>
-      requester
-        .comparePassword(req.body.password)
-        .then((isMatch) => res.send(isMatch))
-        .catch((err) => {
-          console.log("error comparing passwords: ", err);
-          throw new Error("Could not authenticate.");
-        })
-    );
-  });
-
   app.get("/registration/error", (req, res) => {
     res.sendFile(path.join(__dirname, "../registration-error.html"));
   });
 
   app.get("/registration/success", (req, res) => {
     res.sendFile(path.join(__dirname, "../registration-success.html"));
-  });
-
-  app.get("/login", (req, res) => {
-    res.sendFile(path.join(__dirname, "../login.html"));
   });
 
   //send-welcome-email endpoint
@@ -100,7 +75,7 @@ module.exports = (app) => {
       .then((response) => res.send(response))
       .catch((err) => {
         console.log(err);
-        res.status(401).send(err);
+        res.send(err, 401);
       });
   });
   return router;

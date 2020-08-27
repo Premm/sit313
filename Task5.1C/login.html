@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="/css/bootstrap.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="/css/styles.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="/functions.js"></script>
+    <title>Login - iCrowdTask</title>
+  </head>
+  <body>
+    <div
+      class="content align-items-center justify-content-center d-flex min-vh-100 py-4 flex-column"
+    >
+      <div class="card">
+        <div class="card-body">
+          <small id="login-error-message" class="text-danger d-none"
+            >Your email or password did not match our system.</small
+          >
+          <form onsubmit="login(event)">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                class="form-control"
+                name="email"
+                id="email"
+                oninput="CollectFormData(event)"
+              />
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                id="password"
+                oninput="CollectFormData(event)"
+              />
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary btn-block">Login</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div>
+        <span>Don't have an account? <a href="/signup">Sign up!</a></span>
+      </div>
+    </div>
+  </body>
+</html>

@@ -18,24 +18,17 @@ const CollectFormData = (e) => {
 const submitRegistatrionForm = (e) => {
   //stop the browser
   e.preventDefault();
+  console.log("submitting form", formData);
 
-  // validate passwords matching here
-  if (formData.password !== formData.passwordConfirmation) {
-    $(".passwordConfirmation-error-message").html("Password's do not match!");
-    $(".passwordConfirmation-error-message").removeClass("d-none");
-    return;
-  }
-  //take passwordConfirmation out of the payload, no need to send it. We dont want to include it in the save() request sent to mongo.
-  const { passwordConfirmation, ...rest } = formData;
-  console.log("REST:", rest);
   $.ajax({
     url: "/registration",
     method: "POST",
-    data: JSON.stringify(rest),
+    data: JSON.stringify(formData),
     contentType: "application/json; charset=utf-8",
     dataType: "json",
   })
     .then((response) => {
+      console.log("Then", response._id);
       $.ajax({
         url: "/send-welcome-email",
         method: "POST",
@@ -44,11 +37,11 @@ const submitRegistatrionForm = (e) => {
         dataType: "json",
       }).then((data) => {
         console.log(data);
-        window.location = `/registration/success?userId=${response._id}`;
+        window.location.replace(`/registration/success?userId=${response._id}`);
       });
     })
     .catch((err) => {
-      window.location = "/registration/error";
+      window.location.replace("/registration/error");
     });
 };
 
@@ -57,7 +50,9 @@ const resendEmail = (userId) => {
     url: `/requesters/${userId}`,
     method: "GET",
   }).then((response) => {
+    console.log("Then", ...response);
     const { email, firstName, lastName } = response[0];
+    console.log(email, firstName, lastName);
     $.ajax({
       url: "/send-welcome-email",
       method: "POST",
@@ -73,36 +68,14 @@ const resendEmail = (userId) => {
   });
 };
 
-const login = (e) => {
-  e.preventDefault();
-  console.log("LOGGING IN");
-  const { email, password } = formData;
-  $.ajax({
-    url: "/authenticate",
-    method: "POST",
-    data: JSON.stringify({ email, password }),
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-  })
-    .then((response) => {
-      console.log("RESPONSE: ", response);
-      if (response) {
-        window.location = `/tasks`;
-      } else {
-        $("#login-error-message").removeClass("d-none");
-      }
-    })
-    .catch((err) => console.log("ERROR: ", err));
-};
-
 $(window).on("load", () => {
-  // if we're on the registration/success page.
+  console.log(window.location.href);
   if (window.location.href.indexOf("/registration/success") > -1) {
-    // find this element and add a click event listener to it.
     $("#resend-email").on("click", (e) => {
       e.preventDefault();
       const urlParams = new URLSearchParams(window.location.search);
       const userId = urlParams.get("userId");
+      console.log("clicked", userId);
       resendEmail(userId);
     });
   }

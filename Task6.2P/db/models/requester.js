@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-const bcrypt = require("bcrypt");
 
 const requesterSchema = new mongoose.Schema({
   countryOfResidence: {
@@ -14,7 +13,6 @@ const requesterSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    index: { unique: true },
     validate(value) {
       if (!validator.isEmail(value)) {
         throw new Error("Your email is not valid!");
@@ -31,10 +29,20 @@ const requesterSchema = new mongoose.Schema({
       }
     },
   },
+  passwordConfirmation: {
+    type: String,
+    required: true,
+    trim: true,
+    validate(value) {
+      if (this.password !== value) {
+        throw new Error("Your passwords do not match!");
+      }
+    },
+  },
   address: { type: String, required: true, trim: true },
   city: { type: String, required: true, trim: true },
   state: { type: String, required: true, trim: true },
-  postcode: { type: String, trim: true },
+  postCode: { type: String, trim: true },
   phone: {
     type: String,
     trim: true,
@@ -45,23 +53,5 @@ const requesterSchema = new mongoose.Schema({
     },
   },
 });
-
-requesterSchema.pre("save", function (next) {
-  const requester = this;
-  if (!requester.isModified("password")) return next();
-  bcrypt
-    .hash(requester.password, 10)
-    .then((hash) => {
-      requester.password = hash;
-      next();
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
-
-requesterSchema.methods.comparePassword = function (checkPassword) {
-  return bcrypt.compare(checkPassword, this.password);
-};
 
 module.exports = mongoose.model("Requester", requesterSchema);
