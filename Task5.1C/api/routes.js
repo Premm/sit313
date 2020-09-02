@@ -15,7 +15,7 @@ module.exports = (app) => {
     res.sendFile(path.join(__dirname, "../signup.html"));
   });
 
-  // just redirect to login for now.
+  // just redirect to login for now. no home page
   app.get("/", (req, res) => {
     res.redirect("/login");
   });
@@ -24,6 +24,7 @@ module.exports = (app) => {
     res.sendFile(path.join(__dirname, "../reqtasks.html"));
   });
 
+  // added this so i could get the user data, to re send the email (try and subscribe to mailchimp again if it failed).
   app.get("/requesters/:userId", (req, res) => {
     console.log(req.params.userId);
     db.models.Requester.find({ _id: req.params.userId }).then((requester) => {
@@ -31,16 +32,25 @@ module.exports = (app) => {
     });
   });
 
+  //
   app.post("/authenticate", (req, res) => {
-    db.models.Requester.findOne({ email: req.body.email }).then((requester) =>
-      requester
-        .comparePassword(req.body.password)
-        .then((isMatch) => res.send(isMatch))
-        .catch((err) => {
-          console.log("error comparing passwords: ", err);
-          throw new Error("Could not authenticate.");
-        })
-    );
+    db.models.Requester.findOne({ email: req.body.email })
+      .then((requester) => {
+        if (!requester) {
+          res.send(false);
+        }
+        return requester
+          .comparePassword(req.body.password)
+          .then((isMatch) => res.send(isMatch))
+          .catch((err) => {
+            console.log("error comparing passwords: ", err);
+            throw new Error("Could not authenticate.");
+          });
+      })
+      .catch((err) => {
+        console.log("error comparing passwords: ", err);
+        throw new Error("Could not authenticate.");
+      });
   });
 
   app.get("/registration/error", (req, res) => {
