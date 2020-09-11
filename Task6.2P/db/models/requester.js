@@ -61,22 +61,6 @@ requesterSchema.pre("save", function (next) {
     });
 });
 
-// make sure we hash any updates to password
-requesterSchema.pre("update", function (next) {
-  const requester = this;
-  const modifiedField = requester.getUpdate().$set.password;
-  if (!modifiedField) return next();
-  bcrypt
-    .hash(modifiedField, 10)
-    .then((hash) => {
-      this.getUpdate().$set.password = hash;
-      next();
-    })
-    .catch((err) => {
-      return next({ err: "something went wrong" });
-    });
-});
-
 requesterSchema.methods.comparePassword = function (checkPassword) {
   return bcrypt.compare(checkPassword, this.password);
 };

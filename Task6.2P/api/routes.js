@@ -66,19 +66,24 @@ module.exports = (app) => {
         res.send(requester);
       });
     })
-    //Update
-    .put((req, res) => {
-      db.models.Requester.update(
+    //updateOne
+    .put(async (req, res) => {
+      //used findOneAndUpdate because it returns the document that it updates.
+      db.models.Requester.findOneAndUpdate(
         { _id: req.params.userId },
-        { ...req.body },
-        { overwrite: true },
-        (err) => {
-          if (err) {
-            return res.send(err);
-          }
-          res.send(true);
-        }
-      );
+        req.body,
+        { returnOriginal: false, overwrite: true }
+      )
+        .then((requester) => {
+          // then I'm saving it to make use of the mongoose document middleware to hash the password.
+          // I have no idea if this is the best way to do it, but after hours of digging,
+          // I couldnt find a single agreed upon method to do this.
+          new db.models.Requester(requester)
+            .save()
+            .then(() => res.send(true))
+            .catch(() => res.send(false));
+        })
+        .catch(() => res.send("failed to update"));
     })
     //Remove
     .delete((req, res) => {
@@ -90,16 +95,22 @@ module.exports = (app) => {
       });
     })
     .patch((req, res) => {
-      db.models.Requester.update(
+      //used findOneAndUpdate because it returns the document that it updates.
+      db.models.Requester.findOneAndUpdate(
         { _id: req.params.userId },
         { $set: req.body },
-        (err) => {
-          if (err) {
-            return res.send(err);
-          }
-          res.send(true);
-        }
-      );
+        { returnOriginal: false }
+      )
+        .then((requester) => {
+          // then I'm saving it to make use of the mongoose document middleware to hash the password.
+          // I have no idea if this is the best way to do it, but after hours of digging,
+          // I couldnt find a single agreed upon method to do this.
+          new db.models.Requester(requester)
+            .save()
+            .then(() => res.send(true))
+            .catch(() => res.send(false));
+        })
+        .catch(() => res.send("failed to update"));
     });
 
   app.post("/authenticate", (req, res) => {
