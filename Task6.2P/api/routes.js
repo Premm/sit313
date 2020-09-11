@@ -68,15 +68,23 @@ module.exports = (app) => {
     })
     //Update
     .put((req, res) => {
-      db.models.Requester.update(
-        { _id: req.params.userId },
-        { ...req.body },
-        { overwrite: true },
-        (err) => {
-          if (err) {
-            return res.send(err);
-          }
-          res.send(true);
+      db.models.Requester.findOne({ _id: req.params.userId }).then(
+        (requester) => {
+          // get a combination of all the keys in both objects.
+          const combinedObject = { ...req.body, ...requester.toJSON() };
+          //loop through all the keys, if the key exists and isnt null in req.body,
+          //set it to req.body, else set it to undefined (instead of null which would just ignore it.)
+          Object.keys(combinedObject).forEach((key) => {
+            if (key !== "_id")
+              req.body[key]
+                ? (requester[key] = req.body[key])
+                : (requester[key] = undefined);
+          });
+
+          requester
+            .save()
+            .then(() => res.send(true))
+            .catch(() => res.send(false));
         }
       );
     })
