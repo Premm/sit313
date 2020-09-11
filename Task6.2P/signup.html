@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="/css/bootstrap.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="/css/styles.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="/functions.js"></script>
+    <title>ICrowdTask</title>
+  </head>
+  <body>
+    <div
+      class="content align-items-center justify-content-center d-flex min-vh-100 py-4 flex-column"
+    >
+      <h1 class="mb-4">Requester Registration</h1>
+      <p>
+        Create an iCrowdTask Account. Already have an account?
+        <a href="/login">Log in here</a>
+      </p>
+
+      <div class="card col-md-6">
+        <div class="card-body">
+          <form onsubmit="submitRegistatrionForm(event)">
+            <div class="form-group">
+              <label for="countryOfResidence"> Country of Residence</label>
+              <select
+                id="countryOfResidence"
+                name="countryOfResidence"
+                class="form-control"
+                oninput="CollectFormData(event)"
+              >
+                <option value="" disabled selected>Select your option</option>
+                <option>Australia</option>
+              </select>
+              <small
+                class="countryOfResidence-error-message text-danger d-none"
+              >
+                Cannot be empty!
+              </small>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="firstName">First Name</label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    class="form-control"
+                    oninput="CollectFormData(event)"
+                  />
+                  <small class="firstName-error-message text-danger d-none">
+                    Cannot be empty!
+                  </small>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="lastName">Last Name</label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    class="form-control"
+                    oninput="CollectFormData(event)"
+                  />
+                  <small class="lastName-error-message text-danger d-none"
+                    >Cannot be empty!</small
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control"
+                oninput="CollectFormData(event)"
+              />
+              <small class="email-error-message text-danger d-none">
+                Cannot be empty!
+              </small>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="form-control"
+                oninput="CollectFormData(event)"
+              />
+              <small class="password-error-message text-danger d-none">
+                Cannot be empty!
+              </small>
+            </div>
+            <div class="form-group">
+              <label for="passwordConfirmation">Confirm Password</label>
+              <input
+                type="password"
+                id="passwordConfirmation"
+                name="passwordConfirmation"
+                class="form-control"
+                oninput="CollectFormData(event)"
+              />
+              <small
+                class="passwordConfirmation-error-message text-danger d-none"
+                >Cannot be empty!</small
+              >
+            </div>
+            <div class="form-group">
+              <label for="address1">Address</label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                class="form-control"
+                oninput="CollectFormData(event)"
+              />
+              <small class="address1-error-message text-danger d-none"
+                >Cannot be empty!</small
+              >
+            </div>
+            <!-- <div class="form-group">
+              <input
+                type="text"
+                id="address2"
+                name="address2"
+                class="form-control"
+              />
+            </div> -->
+            <div>
+              <div class="row">
+                <div class="col col-md-6">
+                  <div class="form-group">
+                    <label for="city">City</label>
+                    <input
+                      type="text"
+                      id="city"
+                      name="city"
+                      class="form-control"
+                      oninput="CollectFormData(event)"
+                    />
+                    <small class="city-error-message text-danger d-none"
+                      >Cannot be empty!</small
+                    >
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <div class="form-group">
+                    <label for="state">State, Province or Region</label>
+                    <input
+                      type="text"
+                      id="state"
+                      name="state"
+                      class="form-control"
+                      oninput="CollectFormData(event)"
+                    />
+                    <small class="city-error-message text-danger d-none"
+                      >Cannot be empty!</small
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="postcode">ZIP / Postal Code</label>
+              <input
+                type="text"
+                id="postcode"
+                name="postcode"
+                class="form-control"
+                oninput="CollectFormData(event)"
+              />
+            </div>
+            <div class="form-group">
+              <label for="phone">Mobile Phone Number</label>
+              <input
+                type="text"
+                id="phone"
+                name="phone"
+                class="form-control"
+                oninput="CollectFormData(event)"
+              />
+            </div>
+            <div class="form-group">
+              <button
+                type="submit"
+                class="btn btn-primary position-relative btn-block"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
