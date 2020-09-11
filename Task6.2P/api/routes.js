@@ -68,11 +68,11 @@ module.exports = (app) => {
     })
     //updateOne
     .put(async (req, res) => {
-      //used findOneAndUpdate because it returns the document that it updates.
+      //used findOneAndUpdate becuase it returns the document that it updates.
       db.models.Requester.findOneAndUpdate(
         { _id: req.params.userId },
-        req.body,
-        { returnOriginal: false, overwrite: true }
+        { $set: req.body },
+        { returnOriginal: false, runValidators: true, context: "query" }
       )
         .then((requester) => {
           // then I'm saving it to make use of the mongoose document middleware to hash the password.
