@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const { response } = require("express");
 
 const requesterSchema = new mongoose.Schema({
   countryOfResidence: {
@@ -57,6 +58,22 @@ requesterSchema.pre("save", function (next) {
     })
     .catch((err) => {
       return next(err);
+    });
+});
+
+// make sure we hash any updates to password
+requesterSchema.pre("update", function (next) {
+  const requester = this;
+  const modifiedField = requester.getUpdate().$set.password;
+  if (!modifiedField) return next();
+  bcrypt
+    .hash(modifiedField, 10)
+    .then((hash) => {
+      this.getUpdate().$set.password = hash;
+      next();
+    })
+    .catch((err) => {
+      return next({ err: "something went wrong" });
     });
 });
 

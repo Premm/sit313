@@ -24,13 +24,83 @@ module.exports = (app) => {
     res.sendFile(path.join(__dirname, "../reqtasks.html"));
   });
 
-  // added this so i could get the user data, to re send the email (try and subscribe to mailchimp again if it failed).
-  app.get("/requesters/:userId", (req, res) => {
-    console.log(req.params.userId);
-    db.models.Requester.find({ _id: req.params.userId }).then((requester) => {
-      res.send(requester);
+  // Requesters
+  app
+    .route("/requesters")
+    // Retrieve
+    .get((req, res) => {
+      db.models.Requester.find((err, requesters) => {
+        if (err) {
+          return res.send(err);
+        }
+        res.send(requesters);
+      });
+    })
+    //Add
+    .post((req, res) => {
+      const requester = new db.models.Requester({ ...req.body });
+      requester
+        .save()
+        .then((response) => res.send(response))
+        .catch((err) => {
+          res.status(401).send(err);
+        });
+    })
+    //Remove
+    .delete((req, res) => {
+      db.models.Requester.deleteMany((err) => {
+        if (err) {
+          return res.send(err);
+        }
+        res.send(true);
+      });
     });
-  });
+
+  // Single Requester
+  app
+    .route("/requesters/:userId")
+    //Retrieve
+    .get((req, res) => {
+      console.log(req.params.userId);
+      db.models.Requester.find({ _id: req.params.userId }).then((requester) => {
+        res.send(requester);
+      });
+    })
+    //Update
+    .put((req, res) => {
+      db.models.Requester.update(
+        { _id: req.params.userId },
+        { ...req.body },
+        { overwrite: true },
+        (err) => {
+          if (err) {
+            return res.send(err);
+          }
+          res.send(true);
+        }
+      );
+    })
+    //Remove
+    .delete((req, res) => {
+      db.models.Requester.delete({ _id: req.params.userId }, (err) => {
+        if (err) {
+          return res.send(err);
+        }
+        res.send(true);
+      });
+    })
+    .patch((req, res) => {
+      db.models.Requester.update(
+        { _id: req.params.userId },
+        { $set: req.body },
+        (err) => {
+          if (err) {
+            return res.send(err);
+          }
+          res.send(true);
+        }
+      );
+    });
 
   app.post("/authenticate", (req, res) => {
     db.models.Requester.findOne({ email: req.body.email })
