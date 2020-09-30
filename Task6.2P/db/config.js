@@ -2,15 +2,13 @@ const mongoose = require("mongoose");
 
 module.exports = () => {
   mongoose
-    .connect("mongodb://localhost:27017/iCrowdTaskDB", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false,
-    })
-    .then(() =>
-      console.log("Connected to mongodb://localhost:27017/iCrowdTaskDB")
+    .connect(
+      "mongodb+srv://admin-matt:Deakin2020@cluster0.gh01v.mongodb.net/iCloudTaskDB?retryWrites=true&w=majority",
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      }
     )
-    .catch(() =>
-      console.log("Failed to connect to mongodb://localhost:27017/iCrowdTaskDB")
-    );
+    .then(() => console.log("Connected to DB"))
+    .catch(() => console.log("Failed to connect to DB"));
 };

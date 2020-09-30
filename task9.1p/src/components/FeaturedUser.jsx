@@ -4,7 +4,7 @@ import C from "classnames";
 
 const FeaturedUser = (props) => {
   return (
-    <div className={C("d-flex", "col-12", "col-lg-4", "col-md-6")}>
+    <div className={C("d-flex", "col-6", "col-lg-3", "col-md-4")}>
       <div className={C("card", "mb-2")}>
         <div className={C("card-image")}>
           <img src={props.imageUri} width="100%" alt={props.alt} />

@@ -1,3 +1,16 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("./fonts/Roboto-Regular.ttf");
+}
+
+.hero-image {
+  max-height: 400px;
+}
+html,
+body {
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+}
+
 .App {
   text-align: center;
 }

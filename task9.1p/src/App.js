@@ -33,7 +33,7 @@ function App() {
       const requester = {};
       requester.id = uuidv4();
       requester.name = faker.name.findName();
-      requester.logo = faker.image.nature();
+      requester.logo = faker.image.avatar();
       requester.description = faker.lorem.paragraph();
       tempRequesters.push(requester);
     }
