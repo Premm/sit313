@@ -5,8 +5,8 @@ import C from "classnames";
 export const TableBodyCell = (props) => {
   return (
     <td
-      colspan={props.colspan}
-      rowspan={props.rowspan}
+      colSpan={props.colSpan}
+      rowSpan={props.rowSpan}
       className={C(props.className)}
     >
       {props.children}
@@ -17,6 +17,6 @@ export const TableBodyCell = (props) => {
 TableBodyCell.propTypes = {
   className: PropTypes.string,
   scope: PropTypes.string,
-  colspan: PropTypes.number,
-  rowspan: PropTypes.number,
+  colSpan: PropTypes.number,
+  rowSpan: PropTypes.number,
 };

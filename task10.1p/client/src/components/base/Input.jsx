@@ -8,7 +8,8 @@ export const Input = (props) => {
       <input
         type="checkbox"
         className={C("custom-control-input", props.className)}
-        checked={props.value}
+        checked={props.checked}
+        onChange={props.onChange}
       ></input>
       <label
         id={props.id}
@@ -36,6 +37,7 @@ Input.propTypes = {
   name: PropTypes.string,
   id: PropTypes.string,
   value: PropTypes.string,
+  checked: PropTypes.bool,
   type: PropTypes.string,
   switch: PropTypes.bool,
   label: PropTypes.string,

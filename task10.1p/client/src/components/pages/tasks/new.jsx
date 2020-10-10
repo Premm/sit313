@@ -142,7 +142,7 @@ export const NewTask = (props) => {
               label="Require Experienced Workers"
               name="requireExperience"
               id="requireExperience"
-              value={formData.requireExperience}
+              checked={formData.requireExperience}
               onChange={onCheckboxToggle}
             />
           </FormGroup>
@@ -152,7 +152,7 @@ export const NewTask = (props) => {
               type="number"
               name="noOfWorkers"
               id="noOfWorkers"
-              value={formData.noOfWorkers}
+              value={formData.noOfWorkers.toString()}
               onChange={onChange}
             ></Input>
           </FormGroup>
@@ -252,7 +252,7 @@ export const NewTask = (props) => {
                             type="number"
                             name="temporaryReward"
                             id="temporaryReward"
-                            value={temporaryTask.reward}
+                            value={temporaryTask.reward.toString()}
                             onChange={(e) => {
                               const value = e.target.value;
                               setTemporaryTask((s) => ({
@@ -265,7 +265,7 @@ export const NewTask = (props) => {
                       </TableHeader>
                       <TableBody>
                         <TableRow>
-                          <TableBodyCell colspan={2}>
+                          <TableBodyCell colSpan={2}>
                             <label htmlFor="temporaryOption">
                               Add an Option
                             </label>
@@ -310,7 +310,7 @@ export const NewTask = (props) => {
                         {temporaryTask.options &&
                           temporaryTask.options.map((option) => (
                             <TableRow>
-                              <TableBodyCell colspan={2}>
+                              <TableBodyCell colSpan={2}>
                                 {option}
                               </TableBodyCell>
                             </TableRow>
