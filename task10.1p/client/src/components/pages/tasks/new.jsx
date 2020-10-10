@@ -27,6 +27,7 @@ const TaskType = {
   CHOICE: "Multiple Choice",
   DECISION: "True or False",
   SENTENCE: "Long Form Answer",
+  IMAGE: "Image Processing",
 };
 
 export const NewTask = (props) => {
@@ -48,6 +49,7 @@ export const NewTask = (props) => {
     question: "",
     options: [],
     reward: 1,
+    imageURI: "",
   });
 
   // state for storing temporary option values (while an new option for a task is still be filled out.)
@@ -176,6 +178,7 @@ export const NewTask = (props) => {
                   question: "",
                   options: [],
                   reward: 1,
+                  imageURI: "",
                 }));
               }}
             >
@@ -191,6 +194,7 @@ export const NewTask = (props) => {
                   question: "",
                   options: [],
                   reward: 1,
+                  imageURI: "",
                 }));
               }}
             >
@@ -206,10 +210,27 @@ export const NewTask = (props) => {
                   question: "",
                   options: [],
                   reward: 1,
+                  imageURI: "",
                 }));
               }}
             >
               {TaskType.SENTENCE}
+            </Button>
+            <Button
+              variant="secondary"
+              active={taskTypeSelected === TaskType.IMAGE}
+              onClick={() => {
+                setTaskTypeSelected(TaskType.IMAGE);
+                setFormData((s) => ({ ...s, taskType: TaskType.IMAGE }));
+                setTemporaryTask((s) => ({
+                  question: "",
+                  options: [],
+                  reward: 1,
+                  imageURI: "",
+                }));
+              }}
+            >
+              {TaskType.IMAGE}
             </Button>
           </ButtonGroup>
           <small className="text-center mt-2">
@@ -219,6 +240,8 @@ export const NewTask = (props) => {
               ? "A question requiring a true or false answer."
               : taskTypeSelected === TaskType.SENTENCE
               ? "A question or set of instructions requiring a free-form text-based answer."
+              : taskTypeSelected === TaskType.IMAGE
+              ? "A question based on an image displayed."
               : ""}
           </small>
           {taskTypeSelected === TaskType.CHOICE && (
@@ -339,6 +362,7 @@ export const NewTask = (props) => {
                         question: "",
                         options: [],
                         reward: 1,
+                        imageURI: "",
                       }));
                     }
                   }}
@@ -414,6 +438,7 @@ export const NewTask = (props) => {
                         question: "",
                         options: [],
                         reward: 1,
+                        imageURI: "",
                       }));
                     }
                   }}
@@ -485,6 +510,102 @@ export const NewTask = (props) => {
                         question: "",
                         options: [],
                         reward: 1,
+                        imageURI: "",
+                      }));
+                    }
+                  }}
+                >
+                  Add Question
+                </Button>
+              </section>
+            </>
+          )}
+          {taskTypeSelected === TaskType.IMAGE && (
+            <>
+              <section>
+                <Card className="my-2">
+                  <CardBody className="p-0">
+                    <Table striped className="mb-0">
+                      <TableHeader>
+                        <TableHeaderCell>
+                          <label htmlFor="temporaryDescription">
+                            New Question
+                          </label>
+
+                          <Input
+                            type="text"
+                            name="temporaryDescription"
+                            id="temporaryDescription"
+                            value={temporaryTask.question}
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              setTemporaryTask((s) => ({
+                                ...s,
+                                question: value,
+                              }));
+                            }}
+                          ></Input>
+                        </TableHeaderCell>
+                        <TableHeaderCell>
+                          <label htmlFor="temporaryDescription">Reward</label>
+                          <Input
+                            type="number"
+                            name="temporaryReward"
+                            id="temporaryReward"
+                            value={temporaryTask.reward}
+                            onChange={(e) => {
+                              const value = e.target.value;
+
+                              setTemporaryTask((s) => ({
+                                ...s,
+                                reward: value,
+                              }));
+                            }}
+                          ></Input>
+                        </TableHeaderCell>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableBodyCell colSpan={2}>
+                            <label htmlFor="temporaryOption">
+                              Add an Image URI
+                            </label>
+                            <Input
+                              type="text"
+                              name="image"
+                              id="image"
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                setTemporaryTask((s) => ({
+                                  ...s,
+                                  imageURI: value,
+                                }));
+                              }}
+                              value={temporaryTask.imageURI}
+                            ></Input>
+                          </TableBodyCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </CardBody>
+                </Card>
+                <Button
+                  className="my-2"
+                  variant="primary"
+                  onClick={() => {
+                    if (temporaryTask.question) {
+                      setFormData((s) => ({
+                        ...s,
+                        tasks: [
+                          ...s.tasks,
+                          { ...temporaryTask, type: taskTypeSelected },
+                        ],
+                      }));
+                      setTemporaryTask((s) => ({
+                        question: "",
+                        options: [],
+                        reward: 1,
+                        imageURI: "",
                       }));
                     }
                   }}
@@ -524,6 +645,15 @@ export const NewTask = (props) => {
                               <TableBodyCell>{option}</TableBodyCell>
                             </TableRow>
                           ))}
+                        </TableBody>
+                      )}
+                      {task.imageURI && (
+                        <TableBody>
+                          <TableRow>
+                            <TableBodyCell>
+                              {<img src={task.imageURI}></img>}
+                            </TableBodyCell>
+                          </TableRow>
                         </TableBody>
                       )}
                     </Table>

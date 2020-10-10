@@ -8,10 +8,11 @@ const taskSchema = new mongoose.Schema({
   noOfWorkers: Number,
   tasks: [
     {
-      type: String,
+      type: { type: String },
       question: String,
-      reward: Number,
+      reward: String,
       options: [String],
+      imageURI: String,
     },
   ],
 });

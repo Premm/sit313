@@ -6,6 +6,31 @@
 .hero-image {
   max-height: 400px;
 }
+.task-card-container {
+  transition: background-color 0.15s ease-in-out;
+}
+
+.task-card-active-container {
+  z-index: 99;
+  padding-right: 15px;
+  padding-left: 15px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  min-height: 100vh;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  transition: all 0.15s ease-in-out;
+}
+
+.card.task-card-active {
+  padding-right: 0;
+  padding-left: 0;
+}
+
 html,
 body {
   font-family: "Roboto", Arial, Helvetica, sans-serif;

@@ -16,6 +16,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { Home } from "./components/pages/home";
 import { NewTask } from "./components/pages/tasks/new";
+import { Tasks } from "./components/pages/tasks/tasks";
 
 function App() {
   return (
@@ -50,10 +51,13 @@ function App() {
       </Nav>
 
       {/* Content */}
-      <section className="flex-grow-1 d-flex flex-column justify-content-center align-items-center  mb-5">
+      <section className="flex-grow-1 d-flex flex-column align-items-center  mb-5">
         <Switch>
           <Route path="/tasks/new">
             <NewTask />
+          </Route>
+          <Route path="/tasks">
+            <Tasks />
           </Route>
           <Route path="/">
             <Home />

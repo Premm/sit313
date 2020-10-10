@@ -94,7 +94,7 @@ module.exports = (app) => {
     })
     //Remove
     .delete((req, res) => {
-      db.models.Requester.delete({ _id: req.params.userId }, (err) => {
+      db.models.Requester.deleteOne({ _id: req.params.userId }, (err) => {
         if (err) {
           return res.send(err);
         }
@@ -150,11 +150,20 @@ module.exports = (app) => {
         .then(() => {
           res.json("saved successfully!");
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err);
           res.status(400).json("failed to save!");
         });
     });
 
+  app.route("/tasks/:taskId").delete((req, res) => {
+    db.models.Task.deleteOne({ _id: req.params.taskId }, (err) => {
+      if (err) {
+        return res.status(400).json(err);
+      }
+      res.status(200).json("Task Deleted");
+    });
+  });
   router.get("/authenticate/google", passport.authenticate("google"));
 
   router.get(
