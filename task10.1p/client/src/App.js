@@ -50,7 +50,7 @@ function App() {
       </Nav>
 
       {/* Content */}
-      <section className="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
+      <section className="flex-grow-1 d-flex flex-column justify-content-center align-items-center  mb-5">
         <Switch>
           <Route path="/tasks/new">
             <NewTask />
@@ -77,7 +77,7 @@ function App() {
                   />
                   <div className="input-group-append">
                     <Button
-                      variant={"primary"}
+                      variant={"secondary"}
                       onClick={(e) => e.preventDefault()}
                     >
                       Subscribe
