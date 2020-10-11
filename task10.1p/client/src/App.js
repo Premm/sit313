@@ -16,6 +16,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { Home } from "./components/pages/home";
 import { NewTask } from "./components/pages/tasks/new";
+import { Task } from "./components/pages/tasks/task";
 import { Tasks } from "./components/pages/tasks/tasks";
 
 function App() {
@@ -55,6 +56,9 @@ function App() {
         <Switch>
           <Route path="/tasks/new">
             <NewTask />
+          </Route>
+          <Route path="/tasks/:taskId">
+            <Task />
           </Route>
           <Route path="/tasks">
             <Tasks />

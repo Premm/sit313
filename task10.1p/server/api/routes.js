@@ -156,14 +156,31 @@ module.exports = (app) => {
         });
     });
 
-  app.route("/tasks/:taskId").delete((req, res) => {
-    db.models.Task.deleteOne({ _id: req.params.taskId }, (err) => {
-      if (err) {
-        return res.status(400).json(err);
-      }
-      res.status(200).json("Task Deleted");
+  app
+    .route("/tasks/:taskId")
+    .delete((req, res) => {
+      db.models.Task.deleteOne({ _id: req.params.taskId }, (err) => {
+        if (err) {
+          return res.status(400).json(err);
+        }
+        res.status(200).json("Task Deleted");
+      });
+    })
+    .get((req, res) => {
+      db.models.Task.findOne({ _id: req.params.taskId }, (err, task) => {
+        if (err) {
+          return res.status(400).json(err);
+        }
+        res.status(200).json(task);
+      });
     });
+
+  app.route("/submittedTasks").post((req, res) => {
+    new db.models.SubmittedTask(req.body)
+      .save()
+      .then((res) => res.json("Submitted Successfully"));
   });
+
   router.get("/authenticate/google", passport.authenticate("google"));
 
   router.get(

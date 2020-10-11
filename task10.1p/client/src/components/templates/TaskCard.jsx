@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import C from "classnames";
+import { Link } from "react-router-dom";
 import { Card } from "../base/Card";
 import { Button } from "../base/Button";
 import { CardHeader } from "../base/CardHeader";
@@ -99,6 +100,12 @@ export const TaskCard = (props) => {
             </div>
           )}
         </div>
+
+        {props.active && (
+          <Link className="w-100 btn btn-primary" to={`/tasks/${props.id}`}>
+            Let's do it!
+          </Link>
+        )}
       </CardBody>
       <CardFooter className="d-flex justify-content-between">
         <div>
@@ -117,6 +124,7 @@ export const TaskCard = (props) => {
 
 TaskCard.propTypes = {
   className: PropTypes.string,
+  id: PropTypes.string,
   title: PropTypes.string,
   description: PropTypes.string,
   expiryDate: PropTypes.string,

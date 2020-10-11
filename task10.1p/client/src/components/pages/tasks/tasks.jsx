@@ -113,6 +113,7 @@ export const Tasks = (props) => {
               >
                 <div className="d-flex justify-content-center align-items-center flex-grow-1">
                   <TaskCard
+                    id={task._id}
                     active={activeTask === task._id}
                     className={C(activeTask === task._id && "col-12 col-md-6")}
                     title={task.title}
